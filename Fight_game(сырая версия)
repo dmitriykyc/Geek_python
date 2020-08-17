@@ -1,0 +1,93 @@
+from tkinter import *
+from tkinter.ttk import Radiobutton
+from random import randint
+
+
+
+
+
+window = Tk()
+window.title("Добро пожаловать в приложение PythonRu")
+window.geometry('400x250')
+
+healthy_p1 = 100
+healthy_p2 = 100
+comp_fight = ['head', 'boby', 'legs']
+comp_protect = ['head', 'boby', 'legs']
+def clic():
+    global healthy_p1, healthy_p2, comp_protect, comp_fight
+    comp_fight_1 = comp_fight[randint(0, 1)]
+    comp_protect_1 = comp_protect[randint(0, 1)]
+
+    if selected2.get() != comp_protect_1:
+        log1.configure(text=f'Комп защиищал{comp_protect_1}, получает урон -10')
+        healthy_p2 -= 10
+        lbl2.configure(text=healthy_p2)
+    if comp_fight_1 != selected.get(): # Я не смог защититься
+        log2.configure(text=f'Комп бил в {comp_fight_1}, ты получаешь урон -10')
+        healthy_p1 -= 10
+        lbl1.configure(text=healthy_p1)
+
+    # elif selected.get() == 1:
+    #     healthy_p1 -= 10
+    #     lbl1.configure(text=healthy_p1)
+    # elif selected.get() == 2:
+    #     healthy_p1 -= 20
+    #     lbl1.configure(text=healthy_p1)
+    # elif selected.get() == 3:
+    #     healthy_p1 -= 30
+    #     lbl1.configure(text=healthy_p1)
+    if healthy_p1 <= 0:
+        lbl1.configure(text=0)
+        log1.configure(text='Игрок получил как следует!')
+    if healthy_p2 <= 0:
+        lbl2.configure(text=0)
+        log2.configure(text='Комп получил как следует!')
+
+
+selected = StringVar()
+selected2 = StringVar()
+chk_state1 = BooleanVar()
+chk_state2 = BooleanVar()
+chk_state3 = BooleanVar()
+
+log1 = Label(window, text='')
+log1.grid(column=1, row=7)
+log2 = Label(window, text='')
+log2.grid(column=1, row=8)
+
+player1 = Label(window, text='Игрок 1')
+player1.grid(column=0, row=0)
+player2 = Label(window, text='Комп', height=1, width=15)
+player2.grid(column=2, row=0)
+were1 = Label(window, text='   Что защищаем?   ')
+were1.grid(column=0, row=2)
+were2 = Label(window, text='   Куда бьем??   ')
+were2.grid(column=2, row=2)
+
+lbl1 = Label(window, text='Жизни: ' + str(healthy_p1), bg = 'yellow', height=2)
+lbl1.grid(column=0, row=1)
+lbl2 = Label(window, text='Жизни: ' + str(healthy_p2), bg = 'yellow', height=2)
+lbl2.grid(column=2, row=1)
+
+
+rad1 = Radiobutton(window, text='Голова', value='head', variable=selected)
+rad2 = Radiobutton(window, text='Тулово', value='body', variable=selected)
+rad3 = Radiobutton(window, text='Ноги', value='legs', variable=selected)
+rad1.grid(column=0, row=3)
+rad2.grid(column=0, row=4)
+rad3.grid(column=0, row=5)
+
+rad1 = Radiobutton(window, text='Голова', value='head', variable=selected2)
+rad2 = Radiobutton(window, text='Тулово', value='body', variable=selected2)
+rad3 = Radiobutton(window, text='Ноги', value='legs', variable=selected2)
+rad1.grid(column=2, row=3)
+rad2.grid(column=2, row=4)
+rad3.grid(column=2, row=5)
+
+
+
+btn = Button(window, text="Клик", command=clic, height=2, width=15)
+btn.grid(column=1, row=6)
+
+window.mainloop()
